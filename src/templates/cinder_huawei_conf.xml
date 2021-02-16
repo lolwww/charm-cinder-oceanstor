@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <Storage>
+       <Product>{{ options.product }}</Product>
+       <Protocol>{{ options.protocol }}</Protocol>
+       <UserName>{{ options.username }}</UserName>
+       <UserPassword>{{ options.userpassword }}</UserPassword>
+       <RestURL>{{ options.resturl }}</RestURL>
+    </Storage>
+    <LUN>
+       <LUNType>{{ options.luntype }}</LUNType>
+       <StoragePool>{{ options.storagepool }}</StoragePool>
+    </LUN>
+    <iSCSI>
+       <DefaultTargetIP>{{ options.defaulttargetip }}</DefaultTargetIP>
+    </iSCSI>
+</config>

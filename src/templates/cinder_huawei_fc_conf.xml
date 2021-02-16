@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <Storage>
+       <Product>{{ options.product }}</Product>
+       <Protocol>{{ options.protocol }}</Protocol>
+       <UserName>{{ options.username }}</UserName>
+       <UserPassword>{{ options.userpassword }}</UserPassword>
+       <RestURL>{{ options.resturl }}</RestURL>
+    </Storage>
+    <LUN>
+       <LUNType>{{ options.luntype }}</LUNType>
+       <StoragePool>{{ options.storagepool }}</StoragePool>
+        <LUNCopySpeed>{{ options.luncopyspeed }}</LUNCopySpeed>
+        <LUNCloneMode>{{ options.lunclonemode }}</LUNCloneMode>
+        <HyperSyncSpeed>{{ options.hypersyncspeed }}</HyperSyncSpeed>
+    </LUN>
+    <FC>
+       <MinOnlineFCInitiator>{{ options.defaulttargetip }}</MinOnlineFCInitiator>
+        <Initiator HostName="xxx" ALUA="{{ options.alua }}" FAILOVERMODE="{{ options.failovermode }}" PATHTYPE="{{ options.pathtype }}"/>
+    </FC>
+</config>

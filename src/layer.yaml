@@ -1,0 +1,14 @@
+includes: ['layer:openstack', 'interface:cinder-backend']
+config:
+  deletes:
+      - debug
+      - verbose
+      - use-syslog
+      - use-internal-endpoints
+      - ssl_ca
+      - ssl_cert #copy form purstore 'queue handler hooks/relations/tls-certificates/requires.py:109:broken:certificates'
+      - ssl_key  #copy from purstore
+options:
+  basic:
+    use_venv: True #cinder-pattern default
+repo: https://github.com/lolwww/charm-cinder-oceanstor

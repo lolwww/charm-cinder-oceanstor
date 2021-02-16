@@ -1,0 +1,9 @@
+charm_name: cinder-oceanstor
+tests:
+  - tests.tests_cinder_oceanstor.CinderoceanstorTest
+configure:
+  - zaza.openstack.charm_tests.keystone.setup.add_demo_user
+gate_bundles:
+  - xenial-queens
+smoke_bundles:
+  - xenial-queens

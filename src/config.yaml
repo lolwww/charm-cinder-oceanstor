@@ -1,0 +1,115 @@
+options:
+  product:
+    type: string
+    default: v5
+    description: |
+      Type of a storage product. Possible values are TV2, 18000 and V3. 
+  protocol:
+    type: string
+    default: iSCSI
+    description: |
+      Type of a connection protocol. The possible value is either 'iSCSI' or 'FC'. 
+  username:
+    type: string
+    default:   
+    description: |
+      User name of a storage administrator.
+  userpassword:
+    type: string
+    default:   
+    description: |
+      Password of a storage administrator.
+  resturl:
+    type: string
+    default:   
+    description: |
+      Access address of the REST interface, https://x.x.x.x/devicemanager/rest/.  
+      The value x.x.x.x indicates the management IP address. OceanStor 18000 uses 
+      the preceding setting, and V2 and V3 requires you to add port number 8088, 
+      for example, https://x.x.x.x:8088/deviceManager/rest/.  If you need to configure 
+      multiple RestURL, separate them by semicolons (;).
+  luntype:
+    type: string
+    default: Thin 
+    description: |
+      Type of the LUNs to be created. The value can be Thick or Thin. Dorado series 
+      only support Thin LUNs.
+  storagepool:
+    type: string
+    default: 
+    description: |
+      Name of a storage pool to be used. If you need to configure multiple storage pools, 
+      separate them by semicolons (;).
+  defaulttargetip:
+    type: string
+    default: 
+    description: |
+      Default IP address of the iSCSI target port that is provided for compute nodes.
+  volume-backend-name:
+    type: string
+    default: oceanstor
+    description: Service name to present to Cinder
+  luncopyspeed:
+    type: int
+    default: 3
+    description: |
+        LUN copy speed.
+        The value can be 1 (low speed), 2 (mediumspeed), 3 (high speed), or 4 (highest speed)
+  lunclonemode:
+    type: string
+    default: fastclone
+    description: |
+        LUN clone mode. The value can be fastclone or luncopy.
+        Only Dorado supports fastclone.Dorado V300R001C20 and later versionssupport luncopy.
+        Other storage devicessupport only luncopy
+  hypersyncspeed:
+    type: int
+    default: 3
+    description: |
+        HyperMetro pair synchronization speed.
+        The value can be 1 (low speed), 2 (mediumspeed), 3 (high speed), or 4 (highest speed).
+  alua:
+    type: int
+    default: 1
+    description: |
+        0: Huawei UltraPath (default value)
+        1: third-party multipathing software
+  failovermode:
+    type: int
+    default: 1
+    description: |
+        Initiator switchover mode.
+        This parameterneeds to be delivered only when third-partymultipathing software is used.
+        0: early-version ALUA
+        1: common ALUA
+        2: ALUA not used
+        3: special ALUA
+  pathtype:
+    type: int
+    default: 0
+    description: |
+        Initiator path type.
+        This parameter needs to bedelivered only when third-party multipathing software is used.
+        0: optimal path
+        1: non-optimal path
+  hypermetro:
+    type: boolean
+    default: False
+    description: |
+      "A short description of the configuration option"
+  fchostname:
+    type: string
+    default:
+    description: |
+      Regular expression of the Nova or Cinder node host name
+      "Host[0-9]" or "*" or "compute.*" for example
+  vstorename:
+    type: string
+    default: store
+    description: |
+      Vstore name
+  metrodomain:
+    type: string
+    default: domain
+    description: |
+      Hypermetro domain name
