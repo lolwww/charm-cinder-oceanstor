@@ -19,7 +19,7 @@ Configuration
 
        juju config cinder-oceanstor --config config.yaml
 
-    mycfg.yaml likes below:
+    config.yaml example:
     cinder-oceanstor:
        username: admin  
        userpassword: admin 
