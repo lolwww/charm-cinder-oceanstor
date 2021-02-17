@@ -4,6 +4,10 @@ import charmhelpers.core.hookenv as ch_hookenv  # noqa
 charms_openstack.charm.use_defaults('charm.default-select-release')
 
 
+class   ProtocolNotImplimented(Exception):
+    """Unsupported protocol error."""
+
+
 class CinderoceanstorCharm(
         charms_openstack.charm.CinderStoragePluginCharm):
 
@@ -35,7 +39,9 @@ class CinderoceanstorCharm(
         elif self.config.get('protocol').lower() == "iscsi":
             driver_config_file = self.driver_config_file_iscsi
         else:
-            print("Protocol unknown")
+            raise ProtocolNotImplimented(
+                self.config.get('protocol'), ' is not an implimented protocol  driver, '
+                                    'please choose between `iscsi` and `fc`.')
 
         driver_options = [
             ('volume_driver', volume_driver),
