@@ -1,9 +1,9 @@
 options:
   product:
     type: string
-    default: v5
+    default: Dorado
     description: |
-      Type of a storage product. Possible values are TV2, 18000 and V3. 
+      Type of a storage product. Possible values are TV2, 18000, V3 and Dorado.
   protocol:
     type: string
     default: iSCSI
@@ -96,7 +96,9 @@ options:
     type: boolean
     default: False
     description: |
-      "A short description of the configuration option"
+      This parameter describes, whether the HyperMetro sync is enabled on the driver side or not.
+      Prior to enabling this option in the charm, the HyperMetro domain should be configured
+      on the storage array side.
   fchostname:
     type: string
     default:
@@ -113,3 +115,15 @@ options:
     default: domain
     description: |
       Hypermetro domain name
+  use-multipath-for-image-xfer:
+    type: boolean
+    default: true
+    description: |
+      Determines, whether a volume attach/detach in cinder will happen using multipath
+      for volume to image and image to volume transfers.
+  enforce-multipath-image-xfer:
+    type: boolean
+    default: true
+    description: |
+      If this is set to True, attachment of volumes for image transfer will be
+      aborted, when multipathd is not  running. Otherwise, it will fallback to single path.

@@ -1,2 +1,5 @@
 #layer-basic uses wheelhouse to install python dependencies
 psutil
+
+git+https://opendev.org/openstack/charms.openstack.git@stable/21.04#egg=charms.openstack
+git+https://github.com/juju/charm-helpers.git@stable/21.04#egg=charmhelpers
