@@ -38,13 +38,25 @@ options:
     type: string
     default: 
     description: |
-      Name of a storage pool to be used. If you need to configure multiple storage pools, 
-      separate them by semicolons (;).
-  defaulttargetip:
+      Name of a storage pool to be used. Multiple pools are allowed,
+      separated by the semicolons (;).
+  iscsidefaulttargetip:
     type: string
     default: 
     description: |
-      Default IP address of the iSCSI target port that is provided for compute nodes.
+      Default IP address of the iSCSI target that is provided for compute nodes.
+  iscsiinitiators:
+    type: string
+    default:
+    description: |
+      List of iSCSI initiators names, separated by the semicolons. Can be acquired
+      from the /etc/iscsi/initiatorname.iscsi on the compute host.
+  iscsiportgroupname:
+    type: string
+    default:
+    description: |
+      Port Group name on the storage array side. This has to be configured
+      in order to use the iSCSI multipathing.
   volume-backend-name:
     type: string
     default: oceanstor
@@ -60,7 +72,7 @@ options:
     default: fastclone
     description: |
         LUN clone mode. The value can be fastclone or luncopy.
-        Only Dorado supports fastclone.Dorado V300R001C20 and later versionssupport luncopy.
+        Only Dorado supports fastclone. Dorado V300R001C20 and later versions support luncopy.
         Other storage devicessupport only luncopy
   hypersyncspeed:
     type: int
@@ -79,7 +91,7 @@ options:
     default: 1
     description: |
         Initiator switchover mode.
-        This parameterneeds to be delivered only when third-partymultipathing software is used.
+        This parameterneeds to be delivered only when third-party multipathing software is used.
         0: early-version ALUA
         1: common ALUA
         2: ALUA not used
@@ -89,7 +101,7 @@ options:
     default: 0
     description: |
         Initiator path type.
-        This parameter needs to bedelivered only when third-party multipathing software is used.
+        This parameter needs to be delivered only when third-party multipathing software is used.
         0: optimal path
         1: non-optimal path
   hypermetro:

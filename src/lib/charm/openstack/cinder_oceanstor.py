@@ -19,8 +19,7 @@ class CinderoceanstorCharm(charms_openstack.charm.CinderStoragePluginCharm):
 
     # Specify any config that the user *must* set.
     mandatory_config = [
-        'username', 'userpassword', 'resturl',
-        'storagepool', 'defaulttargetip'
+        'username', 'userpassword', 'resturl', 'storagepool', 'protocol'
     ]
 
     driver_config_file_iscsi = "/etc/cinder/cinder_huawei_conf.xml"
