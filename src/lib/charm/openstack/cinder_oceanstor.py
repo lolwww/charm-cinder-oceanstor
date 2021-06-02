@@ -31,6 +31,9 @@ class CinderoceanstorCharm(charms_openstack.charm.CinderStoragePluginCharm):
     }
 
     def cinder_configuration(self):
+        self.config['username'] = self.config.get('username').strip()
+        self.config['userpassword'] = self.config.get('userpassword').strip()
+
         base_driver = 'cinder.volume.drivers.huawei.huawei_driver.{0}'
         drivers = {
             'iscsi': base_driver.format('HuaweiISCSIDriver'),
