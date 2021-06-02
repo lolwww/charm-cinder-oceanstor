@@ -13,9 +13,11 @@
     </LUN>
     <iSCSI>
         <DefaultTargetIP>{{ options.iscsidefaulttargetip }}</DefaultTargetIP>
+        {% if options.iscsiinitiators != '' -%}
         {% set initiators = options.iscsiinitiators.split(';') %}
-        {% for initiator in initiators %}
+        {% for initiator in initiators -%}
         <Initiator Name="{{ initiator }}" TargetPortGroup="{{ options.iscsiportgroupname }}" />
         {% endfor %}
+        {% endif %}
     </iSCSI>
 </config>
