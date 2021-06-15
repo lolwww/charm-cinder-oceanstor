@@ -30,8 +30,7 @@
     {% endif %}
     {% if protocol == "fc" %}
     <FC>
-        <MinOnlineFCInitiator>{{ options.defaulttargetip }}</MinOnlineFCInitiator>
-        <Initiator HostName="{{ options.fchostname }}" ALUA="{{ options.alua }}" FAILOVERMODE="{{ options.failovermode }}" PATHTYPE="{{ options.pathtype }}"/>
+        <Initiator Name="{{ options.fchostname }}" ALUA="{{ options.alua }}" FAILOVERMODE="{{ options.failovermode }}" PATHTYPE="{{ options.pathtype }}"/>
     </FC>
     {% endif %}
 </config>
