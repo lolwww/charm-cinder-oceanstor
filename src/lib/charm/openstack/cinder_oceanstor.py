@@ -21,13 +21,9 @@ class CinderoceanstorCharm(charms_openstack.charm.CinderStoragePluginCharm):
     mandatory_config = [
         'username', 'userpassword', 'resturl', 'storagepool', 'protocol'
     ]
-
-    driver_config_file_iscsi = "/etc/cinder/cinder_huawei_conf.xml"
-    driver_config_file_fc = "/etc/cinder/cinder_huawei_fc_conf.xml"
-
+    driver_config_file = "/etc/cinder/cinder_huawei_conf.xml"
     restart_map = {
-        driver_config_file_iscsi: ['cinder-volume'],
-        driver_config_file_fc: ['cinder-volume']
+        driver_config_file: ['cinder-volume']
     }
 
     def cinder_configuration(self):
@@ -40,15 +36,8 @@ class CinderoceanstorCharm(charms_openstack.charm.CinderStoragePluginCharm):
             'fc': base_driver.format('HuaweiFCDriver'),
         }
 
-        volume_driver = drivers.get(self.config.get('protocol').lower())
-        service = self.config.get('volume-backend-name')
-
         protocol = self.config.get('protocol').lower()
-        if protocol == "fc":
-            driver_config_file = self.driver_config_file_fc
-        elif protocol == "iscsi":
-            driver_config_file = self.driver_config_file_iscsi
-        else:
+        if protocol not in ['fc', 'iscsi']:
             raise ProtocolNotImplemented(
                 "{0} is not an implemented protocol. Please, choose between "
                 "`iscsi` and `fc`.".format(protocol)
@@ -58,9 +47,12 @@ class CinderoceanstorCharm(charms_openstack.charm.CinderStoragePluginCharm):
         enforce_multipath = self.config.get('enforce-multipath-image-xfer')
 
         driver_options = [
-            ('volume_driver', volume_driver),
-            ('cinder_huawei_conf_file', driver_config_file),
-            ('volume_backend_name', service),
+            (
+                'volume_driver',
+                drivers.get(self.config.get('protocol').lower())
+            ),
+            ('cinder_huawei_conf_file', self.driver_config_file),
+            ('volume_backend_name', self.config.get('volume-backend-name')),
             ('use_multipath_for_image_xfer', use_mpath_img_xfer),
             ('enforce_multipath_for_image_xfer', enforce_multipath)
         ]

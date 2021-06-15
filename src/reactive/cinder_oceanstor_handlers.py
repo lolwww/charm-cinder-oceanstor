@@ -34,8 +34,8 @@ charms_openstack.charm.use_defaults(
 @charms.reactive.when_not('driver_file_removed')
 def remove_driver_config():
     with charms_openstack.charm.provide_charm_instance() as charm:
-        os.system("test -e %s && rm %s || :" % ( charm.driver_config_file_iscsi, charm.driver_config_file_iscsi ) )
-        os.system("test -e %s && rm %s || :" % ( charm.driver_config_file_fc, charm.driver_config_file_fc ) )
+        conf = charm.driver_config_file
+        os.system("test -e %s && rm %s || :" % (conf, conf))
 
     charms.reactive.set_flag('driver_file_removed')
 
@@ -47,12 +47,13 @@ def driver_config():
 @charms.reactive.when('config.changed')
 @charms.reactive.when('storage-backend.available')
 def render_config(*args):
-    # Huawei cinder volume driver would modify driver_config_file (/etc/cinder/cinder_huawei_conf.xml) to hidden username and passwrod
-    # so it requires owner by cinder:root
+    # Huawei cinder volume driver would modify driver_config_file
+    # (/etc/cinder/cinder_huawei_conf.xml) to hide username and password
+    # so it requires ownership by cinder:root
+
     with charms_openstack.charm.provide_charm_instance() as charm:
          charm.render_with_interfaces(args)
 
-    os.system("chown cinder:root %s" % charm.driver_config_file_iscsi)
-    os.system("chown cinder:root %s" % charm.driver_config_file_fc)
+    os.system("chown cinder:root %s" % charm.driver_config_file)
     charms.reactive.set_flag('driver_init_configured')
     charm.assess_status()

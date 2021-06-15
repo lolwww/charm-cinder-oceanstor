@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+{% set protocol = options.protocol.lower() %}
 <config>
     <Storage>
         <Product>{{ options.product }}</Product>
@@ -10,7 +11,13 @@
     <LUN>
         <LUNType>{{ options.luntype }}</LUNType>
         <StoragePool>{{ options.storagepool }}</StoragePool>
+        {% if protocol == "fc" %}
+        <LUNCopySpeed>{{ options.luncopyspeed }}</LUNCopySpeed>
+        <LUNCloneMode>{{ options.lunclonemode }}</LUNCloneMode>
+        <HyperSyncSpeed>{{ options.hypersyncspeed }}</HyperSyncSpeed>
+        {% endif %}
     </LUN>
+    {% if protocol == "iscsi" %}
     <iSCSI>
         <DefaultTargetIP>{{ options.iscsidefaulttargetip }}</DefaultTargetIP>
         {% if options.iscsiinitiators != '' -%}
@@ -20,4 +27,11 @@
         {% endfor %}
         {% endif %}
     </iSCSI>
+    {% endif %}
+    {% if protocol == "fc" %}
+    <FC>
+        <MinOnlineFCInitiator>{{ options.defaulttargetip }}</MinOnlineFCInitiator>
+        <Initiator HostName="{{ options.fchostname }}" ALUA="{{ options.alua }}" FAILOVERMODE="{{ options.failovermode }}" PATHTYPE="{{ options.pathtype }}"/>
+    </FC>
+    {% endif %}
 </config>
