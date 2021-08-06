@@ -47,7 +47,7 @@ options:
       Default IP address of the iSCSI target that is provided for compute nodes.
   iscsiinitiators:
     type: string
-    default:
+    default: ''
     description: |
       List of iSCSI initiators names, separated by the semicolons. Can be acquired
       from the /etc/iscsi/initiatorname.iscsi on the compute host.
