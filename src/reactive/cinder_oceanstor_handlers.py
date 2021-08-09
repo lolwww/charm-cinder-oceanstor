@@ -14,7 +14,7 @@
 
 import charms_openstack.charm
 import charms.reactive
-from   charmhelpers.core.host import os
+from charmhelpers.core.host import os
 
 # This charm's library contains all of the handler code associated with
 # this charm -- we will use the auto-discovery feature of charms.openstack
@@ -29,7 +29,9 @@ charms_openstack.charm.use_defaults(
     'storage-backend.connected',
 )
 
-@charms.reactive.when('storage-backend.broken') 
+
+@charms.reactive.when_not('is-update-status-hook')
+@charms.reactive.when('storage-backend.broken')
 @charms.reactive.when('driver_init_configured')
 @charms.reactive.when_not('driver_file_removed')
 def remove_driver_config():
@@ -39,11 +41,15 @@ def remove_driver_config():
 
     charms.reactive.set_flag('driver_file_removed')
 
+
+@charms.reactive.when_not('is-update-status-hook')
 @charms.reactive.when_not('driver_init_configured')
 @charms.reactive.when('storage-backend.available')
 def driver_config():
     charms.reactive.set_flag('config.changed')
 
+
+@charms.reactive.when_not('is-update-status-hook')
 @charms.reactive.when('config.changed')
 @charms.reactive.when('storage-backend.available')
 def render_config(*args):
@@ -52,7 +58,7 @@ def render_config(*args):
     # so it requires ownership by cinder:root
 
     with charms_openstack.charm.provide_charm_instance() as charm:
-         charm.render_with_interfaces(args)
+        charm.render_with_interfaces(args)
 
     os.system("chown cinder:root %s" % charm.driver_config_file)
     charms.reactive.set_flag('driver_init_configured')
