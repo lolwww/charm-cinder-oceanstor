@@ -3,6 +3,11 @@ import charmhelpers.core.hookenv as ch_hookenv  # noqa
 
 charms_openstack.charm.use_defaults('charm.default-select-release')
 
+MULTIPATH_PACKAGES = [
+    'multipath-tools',
+    'sysfsutils',
+]
+
 
 class ProtocolNotImplemented(Exception):
     """Unsupported protocol error."""
@@ -11,10 +16,11 @@ class ProtocolNotImplemented(Exception):
 class CinderoceanstorCharm(charms_openstack.charm.CinderStoragePluginCharm):
 
     name = 'cinder_oceanstor'
-    version_package = ''
+    # Package to determine application version
+    version_package = 'cinder-common'
     release = 'queens'
-    packages = [version_package]
-    release_pkg = ''
+    packages = MULTIPATH_PACKAGES
+    release_pkg = version_package
     stateless = True
 
     # Specify any config that the user *must* set.
@@ -89,10 +95,3 @@ class CinderoceanstorCharm(charms_openstack.charm.CinderStoragePluginCharm):
             driver_options.append(('hypermetro_device', hypermetro_options))
 
         return driver_options
-
-
-class CinderoceanstorCharmRocky(CinderoceanstorCharm):
-    # Rocky needs py3 packages.
-    release = 'rocky'
-    version_package = ''
-    packages = [version_package]
